@@ -13,6 +13,7 @@ export default function Header() {
                <BasketDropdown />
             </div>
          </header>
+         <hr />
 
          <Outlet />
       </>

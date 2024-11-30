@@ -8,7 +8,6 @@ const GamePage = () => {
 
    return (
       <>
-         <hr />
          <section className="mt-7 p-14">
             <img
                src={res[0].img}
