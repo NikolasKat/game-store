@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import ListItem from "./GameList-item";
 
 const gamesData = [
@@ -117,16 +116,17 @@ const GameList = () => {
       <section className="my-16 mx-auto px-16">
          <ul className="flex flex-wrap min-[320px]:justify-center min-[600px]:justify-around min-xl:justify-between">
             {gamesData.map((item) => (
-               <Link key={item.id} to={`/${item.id}`}>
-                  <ListItem
-                     name={item.name}
-                     description={item.description}
-                     img={item.img}
-                     genre={item.genre}
-                     price={item.price}
-                     id={item.id}
-                  />
-               </Link>
+               // <Link key={item.id} to={`/${item.id}`}>
+               <ListItem
+                  key={item.id}
+                  name={item.name}
+                  description={item.description}
+                  img={item.img}
+                  genre={item.genre}
+                  price={item.price}
+                  id={item.id}
+               />
+               // </Link>
             ))}
          </ul>
       </section>

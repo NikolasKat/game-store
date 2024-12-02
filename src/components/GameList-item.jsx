@@ -1,8 +1,12 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
 import { addGame, removeGame } from "../store/slice";
 
 const ListItem = ({ name, description, genre, img, price, id }) => {
    const dispatch = useDispatch();
+   const gamesArray = useSelector((state) => state.games.selectedGames);
+   const isElementInBasket = gamesArray.some((item) => item.id === id);
 
    const addNewGame = () => {
       dispatch(addGame({ name, img, price, id }));
@@ -13,16 +17,20 @@ const ListItem = ({ name, description, genre, img, price, id }) => {
    };
 
    return (
-      <div className="relative max-w-sm min-h-[650px] rounded-lg text-white mb-14">
-         <img
-            className="rounded-t-lg"
-            src={img == "#" ? "../../public/rdr2.jpeg" : img}
-            alt={name}
-         />
+      <div className="relative max-w-sm min-h-[630px] text-white mb-14">
+         <Link to={`/${id}`}>
+            <img
+               className="rounded-3xl"
+               src={img == "#" ? "../../public/rdr2.jpeg" : img}
+               alt={name}
+            />
+         </Link>
          <div className="pt-4">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight hover:text-[#535bf2] hover:[transition:0.2s_all]">
-               {name}
-            </h5>
+            <Link to={`/${id}`}>
+               <h5 className="mb-2 text-2xl font-bold tracking-tight hover:text-[#535bf2] hover:[transition:0.2s_all]">
+                  {name}
+               </h5>
+            </Link>
             <p className="mb-2 text-lg font-normal">
                {description.slice(0, 55)}...
             </p>
@@ -44,15 +52,11 @@ const ListItem = ({ name, description, genre, img, price, id }) => {
             <br />
             <button
                className="bg-violet-700 p-3 rounded-md text-xl font-medium hover:bg-purple-700 absolute bottom-0"
-               onClick={addNewGame}
+               onClick={
+                  isElementInBasket ? () => deleteFromBasket() : addNewGame
+               }
             >
-               Добавить в корзину
-            </button>
-            <button
-               className="bg-violet-700 p-3 rounded-md text-xl font-medium hover:bg-purple-700 absolute bottom-0 right-0"
-               onClick={() => deleteFromBasket()}
-            >
-               delete
+               {isElementInBasket ? "Удалить из корзины" : "Добавить в корзину"}
             </button>
          </div>
       </div>
