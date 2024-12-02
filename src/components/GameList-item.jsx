@@ -8,6 +8,10 @@ const ListItem = ({ name, description, genre, img, price, id }) => {
       dispatch(addGame({ name, img, price, id }));
    };
 
+   const deleteFromBasket = () => {
+      dispatch(removeGame({ id, price }));
+   };
+
    return (
       <div className="relative max-w-sm min-h-[650px] rounded-lg text-white mb-14">
          <img
@@ -43,6 +47,12 @@ const ListItem = ({ name, description, genre, img, price, id }) => {
                onClick={addNewGame}
             >
                Добавить в корзину
+            </button>
+            <button
+               className="bg-violet-700 p-3 rounded-md text-xl font-medium hover:bg-purple-700 absolute bottom-0 right-0"
+               onClick={() => deleteFromBasket()}
+            >
+               delete
             </button>
          </div>
       </div>

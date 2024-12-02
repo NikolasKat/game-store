@@ -16,11 +16,18 @@ const gamesSlice = createSlice({
          });
          state.totalPrice += action.payload.price;
       },
-      removeGame(state, action) {},
+      removeGame(state, action) {
+         state.selectedGames = state.selectedGames.filter(
+            (item) => item.id !== action.payload.id
+         );
+
+         state.totalPrice > 0
+            ? (state.totalPrice -= action.payload.price)
+            : null;
+      },
    },
 });
 
-export const { addGame, removeGame, addPrice, removePrice } =
-   gamesSlice.actions;
+export const { addGame, removeGame } = gamesSlice.actions;
 
 export default gamesSlice.reducer;

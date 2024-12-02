@@ -124,6 +124,7 @@ const GameList = () => {
                      img={item.img}
                      genre={item.genre}
                      price={item.price}
+                     id={item.id}
                   />
                </Link>
             ))}
