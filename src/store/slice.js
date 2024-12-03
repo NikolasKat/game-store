@@ -8,22 +8,30 @@ const gamesSlice = createSlice({
    },
    reducers: {
       addGame(state, action) {
-         state.selectedGames.push({
-            id: action.payload.id,
-            name: action.payload.name,
-            price: action.payload.price,
-            img: action.payload.img,
-         });
-         state.totalPrice += action.payload.price;
+         if (state.selectedGames.some((item) => item.id == action.payload.id)) {
+            return;
+         } else {
+            state.selectedGames.push({
+               id: action.payload.id,
+               name: action.payload.name,
+               price: action.payload.price,
+               img: action.payload.img,
+            });
+            state.totalPrice += action.payload.price;
+         }
       },
       removeGame(state, action) {
-         state.selectedGames = state.selectedGames.filter(
-            (item) => item.id !== action.payload.id
-         );
+         if (state.selectedGames.some((item) => item.id == action.payload.id)) {
+            state.selectedGames = state.selectedGames.filter(
+               (item) => item.id !== action.payload.id
+            );
 
-         state.totalPrice > 0
-            ? (state.totalPrice -= action.payload.price)
-            : null;
+            state.totalPrice > 0
+               ? (state.totalPrice -= action.payload.price)
+               : null;
+         } else {
+            return;
+         }
       },
    },
 });

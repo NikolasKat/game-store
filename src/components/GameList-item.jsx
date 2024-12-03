@@ -1,20 +1,19 @@
-import { useDispatch, useSelector } from "react-redux";
+/* eslint-disable react/prop-types */
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { addGame, removeGame } from "../store/slice";
-
-const ListItem = ({ name, description, genre, img, price, id }) => {
-   const dispatch = useDispatch();
+const ListItem = ({
+   name,
+   description,
+   genre,
+   img,
+   price,
+   id,
+   addNewGame,
+   deleteFromBasket,
+}) => {
    const gamesArray = useSelector((state) => state.games.selectedGames);
-   const isElementInBasket = gamesArray.some((item) => item.id === id);
-
-   const addNewGame = () => {
-      dispatch(addGame({ name, img, price, id }));
-   };
-
-   const deleteFromBasket = () => {
-      dispatch(removeGame({ id, price }));
-   };
+   let isElementInBasket = gamesArray.some((item) => item.id === id);
 
    return (
       <div className="relative max-w-sm min-h-[630px] text-white mb-14">
@@ -53,7 +52,9 @@ const ListItem = ({ name, description, genre, img, price, id }) => {
             <button
                className="bg-violet-700 p-3 rounded-md text-xl font-medium hover:bg-purple-700 absolute bottom-0"
                onClick={
-                  isElementInBasket ? () => deleteFromBasket() : addNewGame
+                  isElementInBasket
+                     ? () => deleteFromBasket(id, price)
+                     : () => addNewGame(name, img, price, id)
                }
             >
                {isElementInBasket ? "Удалить из корзины" : "Добавить в корзину"}
