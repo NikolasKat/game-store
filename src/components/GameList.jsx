@@ -1,6 +1,3 @@
-import { useDispatch } from "react-redux";
-import { addGame, removeGame } from "../store/slice";
-
 import ListItem from "./GameList-item";
 
 const gamesData = [
@@ -115,13 +112,6 @@ const gamesData = [
 ];
 
 const GameList = () => {
-   const dispatch = useDispatch();
-
-   const addNewGame = (name, img, price, id) =>
-      dispatch(addGame({ name, img, price, id }));
-
-   const deleteFromBasket = (id, price) => dispatch(removeGame({ id, price }));
-
    return (
       <section className="my-16 mx-auto px-16">
          <ul className="flex flex-wrap min-[320px]:justify-center min-[600px]:justify-around min-xl:justify-between">
@@ -134,8 +124,6 @@ const GameList = () => {
                   genre={item.genre}
                   price={item.price}
                   id={item.id}
-                  addNewGame={addNewGame}
-                  deleteFromBasket={deleteFromBasket}
                />
             ))}
          </ul>

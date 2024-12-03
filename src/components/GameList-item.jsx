@@ -1,19 +1,27 @@
 /* eslint-disable react/prop-types */
-import { useSelector } from "react-redux";
+import { memo, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { addGame, removeGame } from "../store/slice";
 
-const ListItem = ({
-   name,
-   description,
-   genre,
-   img,
-   price,
-   id,
-   addNewGame,
-   deleteFromBasket,
-}) => {
-   const gamesArray = useSelector((state) => state.games.selectedGames);
-   let isElementInBasket = gamesArray.some((item) => item.id === id);
+const ListItem = ({ name, description, genre, img, price, id }) => {
+   // let isElementInBasket = useSelector(
+   //    (state) => state.games.selectedGames
+   // ).some((item) => item.id === id);
+
+   const dispatch = useDispatch();
+
+   const addNewGame = useCallback(
+      () => dispatch(addGame({ name, img, price, id })),
+      []
+   );
+
+   const deleteFromBasket = useCallback(
+      () => dispatch(removeGame({ id, price })),
+      []
+   );
+
+   console.log("render item");
 
    return (
       <div className="relative max-w-sm min-h-[630px] text-white mb-14">
@@ -51,17 +59,19 @@ const ListItem = ({
             <br />
             <button
                className="bg-violet-700 p-3 rounded-md text-xl font-medium hover:bg-purple-700 absolute bottom-0"
-               onClick={
-                  isElementInBasket
-                     ? () => deleteFromBasket(id, price)
-                     : () => addNewGame(name, img, price, id)
-               }
+               onClick={addNewGame}
             >
-               {isElementInBasket ? "Удалить из корзины" : "Добавить в корзину"}
+               Добавить в корзину
+            </button>
+            <button
+               className="bg-violet-700 p-3 rounded-md text-xl font-medium hover:bg-purple-700 absolute bottom-0 right-0"
+               onClick={() => deleteFromBasket()}
+            >
+               Удалить
             </button>
          </div>
       </div>
    );
 };
 
-export default ListItem;
+export default memo(ListItem);

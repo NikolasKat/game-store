@@ -1,12 +1,15 @@
 import { useDispatch } from "react-redux";
 import { removeGame } from "../store/slice";
+import { memo, useCallback } from "react";
 
 const BasketItem = ({ name, img, price, id }) => {
    const dispatch = useDispatch();
 
-   const deleteFromBasket = () => {
+   const deleteFromBasket = useCallback(() => {
       dispatch(removeGame({ id, price }));
-   };
+   }, []);
+
+   console.log("RENDER BASKET-elem");
 
    return (
       <>
@@ -29,4 +32,4 @@ const BasketItem = ({ name, img, price, id }) => {
    );
 };
 
-export default BasketItem;
+export default memo(BasketItem);
