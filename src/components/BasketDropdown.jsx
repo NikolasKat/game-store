@@ -10,15 +10,10 @@ const BasketDropdown = () => {
 
    return (
       <>
-         <button
-            className="hover:text-purple-700"
-            onClick={() => setClicked(!clicked)}
-         >
-            <FaShoppingBasket />
-         </button>
+         <span className="mr-4 text-4xl">{totalPrice * 41} ₴</span>
 
          {clicked ? (
-            <div className="absolute z-10 w-1/2 bg-violet-700 top-[100px] right-2 text-white rounded-md border border-white p-4">
+            <div className="absolute z-10 w-1/2 bg-violet-700 top-[120px] right-2 text-white rounded-md border border-white p-4">
                {selectedGames.length ? (
                   <>
                      <ul className="flex flex-col gap-3 mb-4">
@@ -56,8 +51,17 @@ const BasketDropdown = () => {
                )}
             </div>
          ) : null}
-
-         <span className="ml-2 text-2xl">{totalPrice * 41} ₴</span>
+         <button
+            className="relative hover:text-purple-700 text-5xl h-20"
+            onClick={() => setClicked(!clicked)}
+         >
+            {selectedGames.length > 0 ? (
+               <div className="absolute block top-0 right-0 w-5 h-5 bg-red-500 rounded-full text-sm font-semibold">
+                  {selectedGames.length}
+               </div>
+            ) : null}
+            <FaShoppingBasket />
+         </button>
       </>
    );
 };
